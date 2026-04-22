@@ -1,0 +1,8 @@
+/vendor/
+/web/core/
+/web/sites/default/files/
+/web/sites/default/private/
+/web/sites/simpletest/
+/web/sites/default/settings.local.php
+/node_modules/
+.env
