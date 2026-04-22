@@ -1,0 +1,160 @@
+body {
+  background: #f0f2f5;
+  font-family: Arial, sans-serif;
+}
+
+/* Center feed */
+.view-content {
+  max-width: 600px;
+  margin: 30px auto;
+}
+
+
+/* Header container */
+.region-header {
+  background: linear-gradient(90deg, #2d88ff, #1877f2);
+  color: white;
+}
+
+.region-primary-menu {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+/* Left side (logo) */
+.block-system-branding-block {
+  display: flex;
+  align-items: center;
+}
+
+/* Right side (menu) */
+.region-header .menu {
+  display: flex;
+  gap: 20px;
+  list-style: none;
+  margin: 0;
+}
+
+/* Remove bullet points */
+.region-header li {
+  list-style: none;
+}
+
+/* Menu links */
+.region-header a {
+  text-decoration: none;
+  color: white;
+  font-weight: 500;
+}
+
+/* Post Card */
+.post-card {
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 15px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Header (avatar + user info) */
+.post-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+/* Avatar */
+.avatar img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  padding-right: 5px;
+}
+/* User info */
+.user-info .username {
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.user-info .date {
+  font-size: 12px;
+  color: #777;
+}
+
+/* Title */
+.post-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin: 10px 0;
+}
+
+.post-title a {
+  text-decoration: none;
+  color: #050505;
+}
+
+.post-title a:hover {
+  text-decoration: underline;
+}
+
+/* Image */
+.post-image {
+  margin: 10px 0;
+}
+
+.post-image img {
+  width: 100%;
+  border-radius: 8px;
+}
+
+/* Body */
+.post-body {
+  font-size: 14px;
+  color: #333;
+  line-height: 1.5;
+}
+
+/* Actions (like/comment/share) */
+.post-actions {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid #eee;
+  font-size: 14px;
+  color: #555;
+}
+
+.post-actions span {
+  cursor: pointer;
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+
+.post-actions span:hover {
+  background: #f0f2f5;
+  color: #1877f2;
+}
+
+/* Optional: smooth hover */
+.post-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+
+.post-controls {
+  margin-left: auto;
+  font-size: 13px;
+}
+
+.post-controls a {
+  margin-left: 10px;
+  color: #65676b;
+  text-decoration: none;
+}
+
+.post-controls a:hover {
+  color: #1877f2;
+}

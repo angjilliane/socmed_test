@@ -1,0 +1,47 @@
+<div class="post-card">
+
+  <!-- HEADER -->
+  <div class="post-header">
+    <div class="avatar">
+        {{ fields.user_picture.content }}
+    </div>
+    
+    <div class="user-info">
+      <div class="username">
+        {{ fields.uid.content }}
+      </div>
+      <div class="date">
+        {{ fields.created.content }}
+      </div>
+    </div>
+  </div>
+    <div class="post-controls">
+        {{ fields.edit_node.content }}
+        {{ fields.delete_node.content }}
+    </div>
+
+  <!-- TITLE -->
+  <h2 class="post-title">
+    {{ fields.title.content }}
+  </h2>
+
+  <!-- IMAGE -->
+  {% if fields.field_image.content %}
+    <div class="post-image">
+      {{ fields.field_image.content }}
+    </div>
+  {% endif %}
+
+  <!-- BODY -->
+  <div class="post-body">
+    {{ fields.body.content }}
+  </div>
+
+  <!-- ACTIONS -->
+  <div class="post-actions">
+    <span>👍 Like</span>
+    <span>💬 Comment</span>
+    <span>🔁 Share</span>
+  </div>
+
+</div>

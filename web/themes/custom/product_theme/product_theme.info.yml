@@ -1,0 +1,14 @@
+name: Product Theme
+type: theme
+core_version_requirement: ^10
+base theme: olivero
+
+libraries:
+  - product_theme/global-styling
+
+libraries-extend:
+  olivero/global-styling:
+    - product_theme/global-styling
+
+logo: logo.png
+favicon: favicon.png
