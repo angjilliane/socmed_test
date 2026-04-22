@@ -88,7 +88,7 @@
  * ];
  * @endcode
  */
-$databases = [];
+// $databases = [];
 
 /**
  * Customizing database settings.
@@ -813,3 +813,15 @@ $settings['migrate_node_migrate_type_classic'] = FALSE;
 # if (file_exists($app_root . '/' . $site_path . '/settings.local.php')) {
 #   include $app_root . '/' . $site_path . '/settings.local.php';
 # }
+
+
+$databases['default']['default'] = [
+  'database' => 'DB_NAME',
+  'username' => 'DB_USER',
+  'password' => 'DB_PASS',
+  'host' => '127.0.0.1',
+  'driver' => 'mysql',
+  'namespace' => 'Drupal\\mysql\\Driver\\Database\\mysql',
+  'autoload' => 'core/modules/mysql/src/Driver/Database/mysql/',
+];
+$settings['config_sync_directory'] = '../config/sync';
