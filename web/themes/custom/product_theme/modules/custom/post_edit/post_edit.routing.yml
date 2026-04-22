@@ -1,0 +1,28 @@
+post_edit.create:
+  path: '/custom/post/create'
+  defaults:
+    _controller: '\Drupal\post_edit\Controller\PostController::create'
+  requirements:
+    _permission: 'access content'
+
+post_edit.update:
+  path: '/custom/post/update'
+  defaults:
+    _controller: '\Drupal\post_edit\Controller\PostController::update'
+  requirements:
+    _permission: 'access content'
+
+post_edit.delete:
+  path: '/custom/post/delete'
+  defaults:
+    _controller: '\Drupal\post_edit\Controller\PostController::delete'
+  requirements:
+    _permission: 'access content'
+
+post_edit.api_posts:
+  path: '/api/posts'
+  defaults:
+    _controller: '\Drupal\post_edit\Controller\PostController::getData'
+  methods: [GET]
+  requirements:
+    _permission: 'access content'

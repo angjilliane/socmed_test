@@ -13,6 +13,7 @@ module:
   contextual: 0
   datetime: 0
   dblog: 0
+  devel_generate: 0
   dynamic_page_cache: 0
   editor: 0
   field: 0
@@ -32,6 +33,7 @@ module:
   page_cache: 0
   path: 0
   path_alias: 0
+  post_edit: 0
   rest: 0
   search: 0
   serialization: 0

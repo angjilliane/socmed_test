@@ -1,0 +1,5 @@
+services:
+  post_edit.login_redirect:
+    class: Drupal\post_edit\EventSubscriber\LoginRedirectSubscriber
+    tags:
+      - { name: event_subscriber }

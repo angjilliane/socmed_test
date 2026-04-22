@@ -2,3 +2,10 @@ global-styling:
   css:
     theme:
       css/style.css: {}
+
+post-edit:
+  js:
+    js/post-edit.js: {}
+  dependencies:
+    - core/drupal
+    - core/once  

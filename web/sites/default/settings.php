@@ -826,3 +826,5 @@ $databases['default']['default'] = array (
   'autoload' => 'core/modules/mysql/src/Driver/Database/mysql/',
 );
 $settings['config_sync_directory'] = '../config/sync';
+$config['system.logging']['error_level'] = 'verbose';
+$base_url = 'http://socmed.local';

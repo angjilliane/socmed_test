@@ -1,0 +1,55 @@
+{{ attach_library('product_theme/post-edit') }}
+
+<div class="main-container">
+    {% if logged_in %}
+    <div class="create-post-box">
+
+        <textarea class="create-body" placeholder="What's on your mind?"></textarea>
+
+        <div class="upload-box">
+        <label class="upload-label">
+            📷 Upload Photo
+            <input type="file" class="create-image" hidden>
+        </label>
+
+        <div class="upload-preview"></div>
+        </div>
+
+        <div class="create-actions">
+        <button class="create-btn">Post</button>
+        </div>
+
+    </div>
+    {% else %}
+        <div class="login-required">
+            <div class="login-icon">💬</div>
+            <h3>Join the conversation</h3>
+            <p>Please log in or create an account.</p>
+
+            <div class="auth-actions">
+                <a href="{{ path('user.login') }}" class="login-btn">Login</a>
+                <a href="{{ path('user.register') }}" class="register-btn">Register</a>
+            </div>
+        </div>
+    {% endif %}
+
+    {% if rows %}
+        <div id="feed"></div>
+        <div id="loading">Loading...</div>
+    {% else %}
+        <div class="empty-feed">
+            <h2>No posts yet 😢</h2>
+            <p>Be the first to share something!</p>
+
+            {% if logged_in %}
+            <a href="{{ path('node.add', {'node_type': 'post'}) }}" class="btn-create">
+                Create Post
+            </a>
+            {% else %}
+            <a href="{{ path('user.login') }}" class="btn-create">
+                Login to post
+            </a>
+            {% endif %}
+        </div>
+    {% endif %}
+</div>

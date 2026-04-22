@@ -1,0 +1,75 @@
+{{ attach_library('product_theme/post-edit') }}
+{% set current_user = app.user %}
+
+<div class="post-card" data-nid="{{ row._entity.id() }}">
+  <!-- HEADER -->
+  <div class="post-header">
+    <div class="avatar">
+      {% if fields.user_picture.content %}
+        {{ fields.user_picture.content }}
+      {% else %}
+        <img src="themes/custom/product_theme/images/default-avatar.png" alt="avatar">
+      {% endif %}
+    </div>
+
+    <div class="user-info">
+      <strong>{{ fields.uid.content }}</strong><br>
+      <small>{{ fields.created.content }}</small>
+    </div>
+
+    <!-- ACTIONS -->
+ 
+    {% if logged_in and (row._entity.getOwnerId() == user.id) %}
+      <div class="post-actions">
+        <button class="edit-btn">✏️</button>
+        <button class="delete-btn">🗑️</button>
+      </div>
+    {% endif %}
+  </div>
+
+  <!-- VIEW MODE -->
+  <div class="post-content">
+    <!-- <h2 class="post-title">{{ fields.title.content }}</h2> -->
+
+    <div class="post-body">
+      {{ fields.body.content }}
+    </div>
+
+     {% if fields.field_image.content %}
+      <div class="post-image">
+        {{ fields.field_image.content }}
+      </div>
+    {% endif %}
+
+  </div>
+
+  <!-- EDIT MODE -->
+  <div class="edit-area" style="display:none;">
+    <textarea class="edit-body">{{ row._entity.body.value }}</textarea>
+    
+    <div class="upload-box">
+      <label class="upload-label">
+        📷 Change Photo
+        <input type="file" class="edit-image" hidden>
+      </label>
+      <div class="upload-preview edit-preview">
+        {% if fields.field_image.content %}
+          {{ fields.field_image.content }}
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="edit-actions">
+      <button class="save-btn">Save</button>
+      <button class="cancel-btn">Cancel</button>
+    </div>
+  </div>
+
+  <!-- ACTIONS -->
+  <div class="post-footer">
+    <span>👍 Like</span>
+    <span>💬 Comment</span>
+    <span>🔁 Share</span>
+  </div>
+
+</div>
