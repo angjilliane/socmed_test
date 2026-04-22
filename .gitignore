@@ -2,6 +2,8 @@
 /web/core/
 /web/sites/default/private/
 /web/sites/simpletest/
+/web/sites/default/settings.php
 /web/sites/default/settings.local.php
+/web/sites/default/files
 /node_modules/
 .env
