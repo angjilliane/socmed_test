@@ -1,0 +1,16 @@
+uuid: 0658bdc9-43a8-4ec3-a062-9ccc8c05d92e
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.post
+  module:
+    - node
+id: author
+label: Author
+weight: 4
+is_admin: null
+permissions:
+  - 'create post content'
+  - 'delete own post content'
+  - 'edit own post content'

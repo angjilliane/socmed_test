@@ -1,0 +1,16 @@
+_core:
+  default_config_hash: 9rAU4Pku7eMBQxauQqAgjzlcicFZ2As6zEa6zvTlCB8
+favicon:
+  mimetype: image/png
+  path: 'public://ChatGPT Image Apr 22, 2026, 04_03_10 AM.png'
+  url: ''
+  use_default: false
+features:
+  comment_user_picture: true
+  comment_user_verification: true
+  favicon: true
+  node_user_picture: true
+logo:
+  path: 'public://ChatGPT Image Apr 22, 2026, 03_51_47 AM_2.png'
+  url: ''
+  use_default: false

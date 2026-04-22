@@ -1,0 +1,22 @@
+uuid: bf142caa-5962-4930-9a81-49277ee4005e
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - product_theme
+_core:
+  default_config_hash: erQSEZF2XUjNmgTl0uNRBzmg18ZGXwUcw2FhApoeuHk
+id: product_theme_content
+theme: product_theme
+region: content
+weight: 0
+provider: null
+plugin: system_main_block
+settings:
+  id: system_main_block
+  label: 'Main page content'
+  label_display: '0'
+  provider: system
+visibility: {  }
