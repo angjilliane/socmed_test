@@ -109,7 +109,6 @@ console.log('POST JS LOADED');
             
               const feed = document.getElementById('feed');
             
-              // ✅ hide empty state
               const empty = document.querySelector('.empty-feed');
               if (empty) empty.style.display = 'none';
             
@@ -318,8 +317,6 @@ console.log('POST JS LOADED');
          INFINITE SCROLL
       ========================= */
       once('infiniteScroll', document.body).forEach(() => {
-
-        // 🔥 PUT IT HERE (VERY TOP)
         window.page = 1;
         window.loading = false;
         window.noMorePosts = false;
@@ -388,7 +385,7 @@ console.log('POST JS LOADED');
           }
         });
       
-        // 🔥 FIRST LOAD
+  
         window.loadPosts();
       
       });
