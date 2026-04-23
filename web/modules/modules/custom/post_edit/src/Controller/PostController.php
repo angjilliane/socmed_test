@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Drupal\node\Entity\Node;
 use Drupal\file\Entity\File;
 use Drupal\Core\File\FileSystemInterface;
+use Drupal\user\Entity\User;
 
 class PostController {
 
@@ -36,10 +37,31 @@ class PostController {
 
     $data = [];
 
+    
     foreach ($nodes as $node) {
+      
+      $uid = $node->uid->target_id;
+      $author = User::load($uid);
+
+      $avatar = '/themes/custom/product_theme/images/default-avatar.png';
+
+      if ($author) {
+        if ($author->hasField('field_profile_image') && !$author->get('field_profile_image')->isEmpty()) {
+          $file = File::load($author->get('field_profile_image')->target_id);
+          if ($file) {
+            $avatar = \Drupal::service('file_url_generator')->generateAbsoluteString($file->getFileUri());
+          }
+        }
+
+        elseif ($author->hasField('user_picture') && !$author->get('user_picture')->isEmpty()) {
+          $file = File::load($author->get('user_picture')->target_id);
+          if ($file) {
+            $avatar = \Drupal::service('file_url_generator')->generateAbsoluteString($file->getFileUri());
+          }
+        }
+      }
 
       $image_url = null;
-
       if (!$node->get('field_image')->isEmpty()) {
         $file = $node->get('field_image')->entity;
         $image_url = \Drupal::service('file_url_generator')
@@ -48,11 +70,12 @@ class PostController {
 
       $data[] = [
         'id' => $node->id(),
+        'autho_ful' =>  $author,
         'body' => $node->get('body')->value,
         'author' => $node->getOwner()->getDisplayName(),
         'created' => date('M d, Y H:i', $node->getCreatedTime()),
         'image' => $image_url,
-        
+        'avatar' => $avatar,
         'is_owner' => $node->getOwnerId() == \Drupal::currentUser()->id(),
       ];
     }
@@ -62,8 +85,8 @@ class PostController {
 
   public function create(Request $request) {
 
-    $body = $request->get('body');
- 
+    $body = $request->request->get('body');
+    $image_url = null;
     if (empty($body)) {
       return new JsonResponse(['error' => 'Empty post'], 400);
     }
@@ -103,13 +126,44 @@ class PostController {
       $node->set('field_image', [
         'target_id' => $file_entity->id(),
       ]);
+    
+      $image_url = \Drupal::service('file_url_generator')
+        ->generateAbsoluteString($file_entity->getFileUri());
     }
   
     $node->save();
+
+
+    $user = \Drupal::currentUser();
+    $uid = $user->id();
+    $author = User::load($uid);
+
+    $avatar = '/themes/custom/product_theme/images/default-avatar.png';
+
+    if ($author) {
+      if ($author->hasField('field_profile_image') && !$author->get('field_profile_image')->isEmpty()) {
+        $file = File::load($author->get('field_profile_image')->target_id);
+        if ($file) {
+          $avatar = \Drupal::service('file_url_generator')->generateAbsoluteString($file->getFileUri());
+        }
+      }
+
+      elseif ($author->hasField('user_picture') && !$author->get('user_picture')->isEmpty()) {
+        $file = File::load($author->get('user_picture')->target_id);
+        if ($file) {
+          $avatar = \Drupal::service('file_url_generator')->generateAbsoluteString($file->getFileUri());
+        }
+      }
+    }
   
     return new JsonResponse([
-      'status' => 'created',
-      'nid' => $node->id(),
+      'id' => $node->id(),
+      'author' =>$user->getDisplayName(),
+      'created' => date('M d, Y H:i', $node->getCreatedTime()),
+      'body' => $node->get('body')->value,
+      'image' => $image_url,
+      'avatar' => $avatar,
+      'is_owner' => true,
     ]);
   }
 

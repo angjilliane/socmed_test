@@ -1,14 +1,13 @@
 console.log('POST JS LOADED');
 
 (function (Drupal, once) {
-
     function renderPost(post) {
         return `
           <div class="post-card" data-nid="${post.id}">
       
             <div class="post-header">
               <div class="avatar">
-                <img src="/themes/custom/product_theme/images/default-avatar.png">
+                <img src="${post.avatar || '/themes/custom/product_theme/images/default-avatar.png'}">
               </div>
       
               <div class="user-info">
@@ -68,7 +67,6 @@ console.log('POST JS LOADED');
 
   Drupal.behaviors.postEdit = {
     attach: function (context) {
-
       /* =========================
          CREATE POST
       ========================= */
@@ -97,33 +95,31 @@ console.log('POST JS LOADED');
                 body: formData
             })
             .then(res => {
-                if (!res.ok) {
-                throw new Error('Post failed');
-                }
-                return res.json();
+              if (!res.ok) throw new Error('Post failed');
+              return res.json();
             })
-            .then(() => {
+            .then(data => {
             
-                // ✅ CLEAR FORM
-                box.querySelector('.create-body').value = '';
-                box.querySelector('.create-image').value = '';
-                box.querySelector('.upload-preview').innerHTML = '';
+              const post = data.data || data;
             
-                // ✅ RELOAD FEED
-                const feed = document.getElementById('feed');
-                if (feed) {
-                    fetch('/api/posts?page=1')
-                        .then(res => res.json())
-                        .then(posts => {
-                    
-                        if (!posts || posts.length === 0) return;
-                    
-                        const post = posts[0]; 
-                        feed.insertAdjacentHTML('beforeend', renderPost(post));
-                    
-                        Drupal.attachBehaviors(feed);
-                    });
+              // clear form
+              box.querySelector('.create-body').value = '';
+              box.querySelector('.create-image').value = '';
+              box.querySelector('.upload-preview').innerHTML = '';
+            
+              const feed = document.getElementById('feed');
+            
+              // ✅ hide empty state
+              const empty = document.querySelector('.empty-feed');
+              if (empty) empty.style.display = 'none';
+            
+              if (feed && post) {
+                const exists = feed.querySelector(`[data-nid="${post.id}"]`);
+                if (!exists) {
+                  feed.insertAdjacentHTML('afterbegin', renderPost(post));
+                  Drupal.attachBehaviors(feed);
                 }
+              }
             
             })
             .catch(err => {
@@ -321,61 +317,80 @@ console.log('POST JS LOADED');
       /* =========================
          INFINITE SCROLL
       ========================= */
-      once('infiniteScroll', context).forEach(() => {
+      once('infiniteScroll', document.body).forEach(() => {
 
-        let lastCall = 0;
+        // 🔥 PUT IT HERE (VERY TOP)
         window.page = 1;
         window.loading = false;
-
+        window.noMorePosts = false;
+      
+        let lastCall = 0;
+      
         window.loadPosts = function () {
-
-          if (loading) return;
-
+      
+          if (window.loading || window.noMorePosts) return;
+      
           const feed = document.getElementById('feed');
           if (!feed) return;
-
-          loading = true;
-
+      
           const loadingEl = document.getElementById('loading');
-          if (loadingEl) loadingEl.style.display = 'block';
-
-          fetch('/api/posts?page=' + page)
+      
+          if (window.loading) return;
+          window.loading = true;
+          
+          if (loadingEl) {
+            loadingEl.style.display = 'block';
+            loadingEl.innerText = 'Loading...';
+          }
+      
+          fetch('/api/posts?page=' + window.page)
             .then(res => res.json())
             .then(posts => {
-
+      
               if (!posts || posts.length === 0) {
-                if (loadingEl) loadingEl.innerText = 'No more posts';
-                loading = false;
+                window.noMorePosts = true;
+      
+                if (loadingEl) {
+                  loadingEl.innerText = 'No more posts';
+                  setTimeout(() => loadingEl.style.display = 'none', 800);
+                }
+      
+                window.loading = false;
                 return;
               }
-
+      
               posts.forEach(post => {
+                const exists = feed.querySelector(`[data-nid="${post.id}"]`);
+                if (exists) return;
+      
                 feed.insertAdjacentHTML('beforeend', renderPost(post));
               });
-
+      
               Drupal.attachBehaviors(feed);
-
-              page++;
-              loading = false;
-
+      
+              window.page++;
+              window.loading = false;
+      
               if (loadingEl) loadingEl.style.display = 'none';
             })
             .catch(() => {
-              loading = false;
+              window.loading = false;
             });
         };
-
+      
         window.addEventListener('scroll', () => {
           const now = Date.now();
           if (now - lastCall < 500) return;
           lastCall = now;
-
+      
           if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 200) {
-            loadPosts();
+            window.loadPosts();
           }
         });
-
-        loadPosts();
+      
+        // 🔥 FIRST LOAD
+        window.loadPosts();
+      
       });
 
     }

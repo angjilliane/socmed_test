@@ -35,21 +35,11 @@
 
     {% if rows %}
         <div id="feed"></div>
-        <div id="loading">Loading...</div>
+        <div id="loading">Lodaing....</div>
     {% else %}
         <div class="empty-feed">
             <h2>No posts yet 😢</h2>
             <p>Be the first to share something!</p>
-
-            {% if logged_in %}
-            <a href="{{ path('node.add', {'node_type': 'post'}) }}" class="btn-create">
-                Create Post
-            </a>
-            {% else %}
-            <a href="{{ path('user.login') }}" class="btn-create">
-                Login to post
-            </a>
-            {% endif %}
         </div>
     {% endif %}
 </div>

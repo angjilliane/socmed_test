@@ -10,5 +10,5 @@ libraries-extend:
   olivero/global-styling:
     - product_theme/global-styling
 
-logo: logo.png
-favicon: favicon.png
+logo: images/logo.png
+favicon: images/favicon.ico
